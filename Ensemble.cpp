@@ -6,6 +6,7 @@ int main(int argc, char** argv)
 
 	for (number_of_files = 0; ;)
 	{
+		mkdir("fifo", 0777);
 		string weight_file = string(argv[2]) + string("/classifier_") + std::to_string(number_of_files) + string(".csv");
 		char* const weight_file_name = const_cast<char*>(weight_file.c_str());
 		string data_file = string(argv[1]) + string("/dataset.csv");
@@ -52,6 +53,7 @@ int main(int argc, char** argv)
 	}
 	else
 	{
+		wait(NULL);
 		const char* fifo_name = "fifo/ensemble-fifo";
 		int fd = open(fifo_name, O_WRONLY | O_RDONLY | O_CREAT, 0666);
 		mkfifo(fifo_name, 0666);
@@ -84,7 +86,8 @@ int main(int argc, char** argv)
 				++match;
 		}
 
-		wait(NULL);
-		printf("Accuracy:  %.2f", 100.0 * match / all);
+		unlink(fifo_name);
+		rmdir("fifo");
+		printf("Accuracy: %.2f", 100.0 * match / all);
 	}
 }

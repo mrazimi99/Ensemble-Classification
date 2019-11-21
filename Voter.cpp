@@ -23,6 +23,8 @@ int main()
 			std::getline(fifo_file, detected_class, '\n');
 			result[stoul(number)][stoul(detected_class)] += 1;
 		}
+
+		unlink(this_fifo_name.c_str());
 	}
 
 	uint32_t result_size = result.size();
@@ -46,7 +48,6 @@ int main()
 			}
 		}	
 
-		// cout << i << "," << detection << endl;
 		string data = std::to_string(i) + "," + std::to_string(detection) + "\n";
 		write(fd, data.c_str(), data.length());
 	}
