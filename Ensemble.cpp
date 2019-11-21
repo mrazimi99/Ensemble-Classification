@@ -27,11 +27,11 @@ int main(int argc, char** argv)
 		if (fork() == 0)
 		{
 			close(pipe_fd[1]);
-			char* const exec_file = const_cast<char* const>("Linear.out");
+			char* const exec_file_name = const_cast<char* const>("Linear.out");
 			std::string pipe_destination_string = std::to_string(pipe_fd[0]);
 			char* const pipe_destination = const_cast<char*>(pipe_destination_string.c_str());
-			char* const child_argv[] = {exec_file, pipe_destination, NULL};
-			execv(child_argv[0], child_argv);
+			char* const child_argv[] = {exec_file_name, pipe_destination, NULL};
+			execv(exec_file_name, child_argv);
 		}
 		else
 		{
@@ -49,8 +49,9 @@ int main(int argc, char** argv)
 
 	if (fork() == 0)
 	{
-		char* const voter_argv[] = {const_cast<char* const>((string(argv[1]) + string("/labels.csv")).c_str()), NULL};
-		execv("Voter.out", voter_argv);
+		char* const exec_file_name = const_cast<char* const>("Voter.out");
+		char* const voter_argv[] = {exec_file_name, NULL};
+		execv(exec_file_name, voter_argv);
 	}
 	else
 	{
