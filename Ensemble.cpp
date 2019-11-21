@@ -30,13 +30,14 @@ int main(int argc, char** argv)
 			char* const exec_file = const_cast<char* const>("Linear.out");
 			std::string pipe_destination_string = std::to_string(pipe_fd[0]);
 			char* const pipe_destination = const_cast<char*>(pipe_destination_string.c_str());
-			char* const child_argv[] = {exec_file, pipe_destination, data_file_name, NULL};
+			char* const child_argv[] = {exec_file, pipe_destination, NULL};
 			execv(child_argv[0], child_argv);
 		}
 		else
 		{
 			close(pipe_fd[0]);
-			write(pipe_fd[1], weight_file_name, weight_file.length()+1);
+			string message = string(weight_file_name) + " " + string(data_file_name);
+			write(pipe_fd[1], message.c_str(), message.length()+1);
 			close(pipe_fd[1]);
 			++number_of_files;
 		}

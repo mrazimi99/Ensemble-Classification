@@ -2,18 +2,21 @@
 
 int main(int argc, char** argv)
 {
-	constexpr uint16_t MAX_LINE = 200;
-	char coefs_file_name[MAX_LINE];
-	char* data_file_name = argv[2];
+	constexpr uint16_t MAX_LINE = 300;
+	char message[MAX_LINE];
 	int read_fd = std::strtod(argv[1], NULL);
-	size_t coef_name_length = read(read_fd, coefs_file_name, MAX_LINE);
-	coefs_file_name[coef_name_length] = '\0';
+	size_t message_length = read(read_fd, message, MAX_LINE);
+	message[message_length] = '\0';
 	close(read_fd);
+	string message_string(message);
+	size_t space = message_string.find(" ");
+	string coefs_file_name = message_string.substr(0, space);
+	string data_file_name = message_string.substr(space + 1);
 	std::ifstream coefs_file(coefs_file_name);
-	std::ifstream data_file(argv[2]);
+	std::ifstream data_file(data_file_name);
 	std::vector<std::array<double, 3>> coefs;
 	bool data_started = false;
-	string number = string(coefs_file_name);
+	string number = coefs_file_name;
 	size_t start_of_name = number.find("classifier_");
 	number = number.substr(start_of_name + 11);
 	size_t dot = number.find(".");
