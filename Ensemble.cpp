@@ -19,10 +19,7 @@ int main(int argc, char** argv)
 		int pipe_fd[2];
 
 		if (pipe(pipe_fd) < 0)
-		{
-			perror("Error on creating unnamed pipe!");
 			exit(EXIT_FAILURE);
-		}
 
 		if (fork() == 0)
 		{

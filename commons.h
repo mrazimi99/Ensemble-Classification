@@ -13,17 +13,4 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-using std::cout;
-using std::endl;
 using std::string;
-
-void logger(std::string message)
-{
-	std::cout << message << std::endl;
-}
-
-void die_with_error(std::string message)
-{
-	std::cerr << message << std::endl;
-	exit(EXIT_FAILURE);
-}

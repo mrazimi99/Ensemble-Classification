@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 	mkfifo(fifo_name.c_str(), 0666);
 
 	if (!coefs_file || !data_file)
-		die_with_error("Could not open file!");
+		exit(EXIT_FAILURE);
 
 	while(true)
 	{
